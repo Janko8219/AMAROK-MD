@@ -1,11 +1,10 @@
 const { command, isPublic, tiny } = require("../lib")
 const axios = require("axios")
-const thumb = "https://telegra.ph/file/e1fa1db5368bc7eb40c95.png";
 
 command({ pattern: "git", fromMe: isPublic, type: "search",}, async(message,match) => {
 let { data } = await axios.get(`https://api.github.com/repos/Diegoson/AMAROK-MD`)
 const buttons = [
-  {buttonId: 'ping', buttonText: {displayText: 'ALIVE'}, type: 1},
+  {buttonId: 'ping', buttonText: {displayText: 'SPEED'}, type: 1},
   {buttonId: 'alive', buttonText: {displayText: 'ALIVE'}, type: 1}
 ]
 const buttonMessage = {
@@ -15,17 +14,7 @@ const buttonMessage = {
   buttons: buttons,
   headerType: 1
 }
-contextlnfo: {
-   externalAdReply: {
-      title: 'ᴀᴍᴀʀᴏᴋ MD',
-      body: 'ᴅɪᴇɢᴏsᴏᴍ',
-      mediaType: 2,
-      thumbnail: 'https://telegra.ph/file/e1fa1db5368bc7eb40c95.png',
-      mediaUrl: 'https://amarok-deploy.vercel.app',
-      sourceUrl: 'https://amarok-deploy.vercel.app',
-      showAdAttribution: true
-}}
-});
 return await message.client.sendMessage(message.jid, buttonMessage, {
  quoted: message 
- });
+ })
+});
