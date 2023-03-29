@@ -24,7 +24,8 @@ contextlnfo: {
       mediaUrl: 'https://amarok-deploy.vercel.app',
       sourceUrl: 'https://amarok-deploy.vercel.app',
       showAdAttribution: true
-}
+}}
+});
 return await message.client.sendMessage(message.jid, buttonMessage, {
  quoted: message 
  });
