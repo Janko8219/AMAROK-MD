@@ -5,7 +5,7 @@ const { cron, saveSchedule } = require("../lib/scheduler");
 command(
   {
     pattern: "add ?(.*)",
-    fromMe: isPrivate,
+    fromMe: true,
     desc: "Adds a person to group",
     type: "group",
   },
@@ -70,7 +70,7 @@ command(
 command(
   {
     pattern: "promote",
-    fromMe: isPrivate,
+    fromMe: true,
     type: "group",
   },
   async (message, match) => {
@@ -91,7 +91,7 @@ command(
 command(
   {
     pattern: "demote",
-    fromMe: isPrivate,
+    fromMe: true,
     type: "group",
   },
   async (message, match) => {
@@ -112,7 +112,7 @@ command(
 command(
   {
     pattern: "mute",
-    fromMe: isPublic,
+    fromMe: true,
     type: "group",
   },
   async (message, match, m, client) => {
@@ -128,7 +128,7 @@ command(
 command(
   {
     pattern: "unmute",
-    fromMe: isPublic,
+    fromMe: true,
     type: "group",
   },
   async (message, match, m, client) => {
@@ -164,7 +164,7 @@ command(
 command(
   {
     pattern: "tagall ?(.*)",
-    fromMe: isPublic,
+    fromMe: true,
     type: "group",
   },
   async (message, match) => {
