@@ -1,3 +1,5 @@
+const { command, isPrivate } = require("../lib")
+
 command(
   {
     pattern: "song",
