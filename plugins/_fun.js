@@ -26,3 +26,18 @@ command(
  return await message.reply(`${dare()}`);
 }
 )
+ 
+//--------------------------------
+//------FACTS NEW FEATURE---------
+//--------------------------------
+
+command({
+       pattern: "fact",
+       fromMe: isPublic,
+       type: "mics",
+ },
+ async(message, match, text) => {
+      const { data } = await axios.get(`https://nekos.life/api/v2/fact`)
+      return message.reply(`*Fact:* ${data.fact}\n\n*Powered by Amarok*`)   
+    }
+)
