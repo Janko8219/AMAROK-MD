@@ -1,4 +1,4 @@
-   const { command, amk1, isPublic, get buffer, RandomXp, Config, tlang, botpic } = require("../lib")
+   const { command, amk1, isPublic, getBuffer, RandomXp, Config, tlang, botpic } = require("../lib")
    const Levels = require("discord-xp")
    
 
