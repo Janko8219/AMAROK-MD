@@ -39,7 +39,7 @@
       "required": false
     },
     "GPTAPIKEY": {
-      "description": "Add api key for chatgptai"
+      "description": "Add api key for chatgptai",
       "required": false
     },
     "GOODBYE_MSG": {
@@ -49,6 +49,15 @@
     "SUDO": {
       "description": "sudo numbers with country code seperate with , for multiple numbers",
       "required": false
+    },
+    "LEVEL_UP_MESSAGE": {
+    "description": "Fill the value true if you want bot send Level up message in chat.",
+     "required" :false,
+     "value": "true"
+    },
+    "THEME": {
+    "description": "Put the theme name you want to use. Avilable themes are GOKU only..",
+     "value": "GOKU"
     },
     "HEROKU_APP_NAME": {
       "description": "Heroku app name, same as above entered",
