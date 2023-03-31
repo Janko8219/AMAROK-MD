@@ -17,7 +17,7 @@ let yturlm = query.match(ytIdRegex)
 
 command(
   {
-    pattern: "song",
+    pattern: "mp3",
     fromMe: isPrivate,
     type: "downloader",
   },
