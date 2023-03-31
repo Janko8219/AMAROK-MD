@@ -41,3 +41,26 @@ command({
       return message.reply(`*Fact:* ${data.fact}\n\n*Powered by Amarok*`)   
     }
 )
+
+//------------------
+//    IM BORED 
+//-----------------
+
+command({
+  pattern: "quote",
+  fromMe: isPublic,
+  type: "mics",
+},
+async(message, match, text) => {
+var quoo = await axios.get(`https://favqs.com/api/qotd`)
+const replyf = `
+╔════◇
+║ *🎖Content:* ${quoo.data.quote.body}
+║ *👤Author:* ${quoo.data.quote.author}
+║    
+╚════════════╝ `
+
+ return message.reply(replyf)
+}
+)
+
