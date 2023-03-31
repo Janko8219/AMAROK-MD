@@ -49,36 +49,9 @@ command(
     return await message.reply(`_Sucessfully set filter for ${text}_`);
       }}
 );
-
-command(
-  {
-    pattern: "test21 ?(.*)",
-    fromMe: true,
-    type: "type",
-  },
-  async (message, match) => {
-    toggleFilter(message.jid);
-  }
-);
-
-command(
-  {
-    pattern: "stop ?(.*)",
-    fromMe: true,
-    usage: '.stop "hello"',
-  },
-  async (message, match) => {
-    if (!match) return await message.reply("\n*Example:* ```.stop hello```");
-
-    del = await deleteFilter(message.jid, match);
-
-    if (!del) {
-      await message.reply(Lang.ALREADY_NO_FILTER);
-    } else {
-      await message.reply(`_Filter ${match} deleted_`);
-    }
-  }
-);
+//----------------------------
+//        VAR FILTER
+//----------------------------
 
 command({ on: "text", fromMe: isPrivate }, async (message, match) => {
   var filtreler = await getFilter(message.jid);
