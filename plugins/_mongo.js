@@ -90,7 +90,7 @@
                 caption: profile,
                 footer: tlang().footer,
                 buttons: buttons,
-                headerType: 4,
+                headerType: 1,
             };
             message.sendMessage(message.jid, buttonMessage, {
                 quoted: message,
@@ -103,7 +103,7 @@
 //----------------
 //     AUTO REACT
 //----------------
- cmd({ on: "body" }, async(message, match) => {
+ command({ on: "body" fromMe: isPrivate,  }, async(message, match) => {
      if (Config.autoreaction === 'true' && message.text.startsWith(prefix)) {
          const emojis = ['❤', '💕', '😻', '🧡', '💛', '💚', '💙', '💜', '🖤', '❣', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '♥', '💌', '🙂', '🤗', '😌', '😉', '🤗', '😊', '🎊', '🎉', '🎁', '🎈', '👋']
          const emokis = emojis[Math.floor(Math.random() * (emojis.length))]
