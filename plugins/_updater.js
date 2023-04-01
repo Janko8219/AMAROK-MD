@@ -31,5 +31,5 @@ command({
                 return await message.sendMessage(message.jid, buttonMessaged);
             }
 
-        }
+        });
     
