@@ -92,7 +92,7 @@ const buttons = [
                 },
                 caption: profile,
                 footer: tlang().footer,
-                buttons: buttonsd,
+                buttons: buttons,
                 headerType: 1,
             };
             message.sendMessage(message.jid, buttonMessage, {
