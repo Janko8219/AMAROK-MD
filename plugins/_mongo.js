@@ -1,4 +1,4 @@
-   const { command, amk1, isPublic, getBuffer, RandomXp, Config, tlang, botpic } = require("../lib")
+   const { command, amk1, isPublic, isPrivate, getBuffer, RandomXp, Config, tlang, botpic } = require("../lib")
    const Levels = require("discord-xp")
    const fs = require("fs")   
 
@@ -103,7 +103,7 @@
 //----------------
 //     AUTO REACT
 //----------------
- command({ on: "body" fromMe: isPrivate,  }, async(message, match) => {
+ command({ on: "body", fromMe: isPrivate,  }, async(message, match) => {
      if (Config.autoreaction === 'true' && message.text.startsWith(prefix)) {
          const emojis = ['❤', '💕', '😻', '🧡', '💛', '💚', '💙', '💜', '🖤', '❣', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '♥', '💌', '🙂', '🤗', '😌', '😉', '🤗', '😊', '🎊', '🎉', '🎁', '🎈', '👋']
          const emokis = emojis[Math.floor(Math.random() * (emojis.length))]
