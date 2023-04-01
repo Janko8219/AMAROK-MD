@@ -9,7 +9,6 @@ command({
             type: "misc",
         },
         async(message, match, text,{ isCreator }) => {
-            if (!match) return message.reply('This command is only for my owner')
             let commits = await DB.syncgit()
             if (commits.total === 0) {
                 message.reply(`Hey ${message.pushName}. You have latest version installed.`)
