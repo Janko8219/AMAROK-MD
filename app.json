@@ -60,10 +60,6 @@
      "required" :false,
      "value": "true"
     },
-    "THEME": {
-    "description": "Put the theme name you want to use. Avilable themes are GOKU only..",
-     "value": "GOKU"
-    },
     "HEROKU_APP_NAME": {
       "description": "Heroku app name, same as above entered",
       "required": true
