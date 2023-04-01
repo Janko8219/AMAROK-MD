@@ -121,7 +121,7 @@ module.exports = {
     GOODBYE_MSG: process.env.GOODBYE_MSG                    ||          "Hi @user It was Nice Seeing you",
 //-------------------------------------------------------------------------------------------------------
 
-    AUTOREACTION: process.env.AUTO_REACTION || "on",
+    autoreaction: process.env.AUTO_REACTION || "on",
 
 //---------------------------------------------------------------------------------------------------
 //              DATABASE URL
