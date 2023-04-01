@@ -20,6 +20,11 @@
       "description": "Remove bg api key ",
       "required": false
     },
+    "AUTO_REACTION": {
+    "description": "Reacts emoji to all commands.",
+     "value": "false",
+     "required": true
+    },
     "SESSION_ID": {
       "description": "Your Session ID",
       "required": true
