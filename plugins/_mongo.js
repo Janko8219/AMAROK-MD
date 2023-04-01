@@ -1,6 +1,6 @@
-   const { command, amk1, isPublic, getBuffer, RandomXp, Config, tlang, botpic } = require("../lib")
+   const { command, amk1, isPublic, isPrivate, getBuffer, RandomXp, Config, tlang, botpic } = require("../lib")
    const Levels = require("discord-xp")
-   
+   const fs = require("fs")   
 
    command({
          pattern: "profile",
@@ -8,10 +8,10 @@
          type: "mics",
   },
   async(message, match, text) => {
-            var bio = await message.fetchStatus(m.sender);
+            var bio = await message.fetchStatus(message.sender);
             var bioo = bio.status;
-            let meh = m.sender;
-            const userq = await Levels.fetch(m.sender, "RandomXP");
+            let meh = message.sender;
+            const userq = await Levels.fetch(message.sender, "RandomXP");
             const lvpoints = userq.level;
             var role = "GODâœ¨";
             if (lvpoints <= 2) {
@@ -69,7 +69,7 @@
             moment.tz.setDefault('Asia/Kolakata')
                 .locale('id')
             try {
-                pfp = await message.profilePictureUrl(m.sender, "image");
+                pfp = await message.profilePictureUrl(message.sender, "image");
             } catch (e) {
                 pfp = await botpic();
             }
@@ -83,16 +83,13 @@
 *ðŸ“¥ Total Messages* ${ttms}
 *Powered by ${tlang().title}*
 `;
-const buttons = [
-   {buttonld: 'menu', buttonText: {displayText: 'MENU'}, type: 1},
-   ]
    let buttonMessage = {
                 image: {
                     url: pfp,
                 },
                 caption: profile,
                 footer: tlang().footer,
-                buttons: buttonsd,
+                buttons: buttons,
                 headerType: 1,
             };
             message.sendMessage(message.jid, buttonMessage, {
@@ -102,5 +99,23 @@ const buttons = [
         }
     )
     
+
+//----------------
+//     AUTO REACT
+//----------------
+ command({ on: "text", fromMe: isPrivate,  }, async(message, match) => {
+     if (Config.autoreaction === 'true' && message.text.startsWith(prefix)) {
+         const emojis = ['❤', '💕', '😻', '🧡', '💛', '💚', '💙', '💜', '🖤', '❣', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '♥', '💌', '🙂', '🤗', '😌', '😉', '🤗', '😊', '🎊', '🎉', '🎁', '🎈', '👋']
+         const emokis = emojis[Math.floor(Math.random() * (emojis.length))]
+         message.sendMessage(message.jid, {
+             react: {
+                 text: emokis,
+                 key: message.key
+             }
+         })
+     }
+ })
+
+
     
   
