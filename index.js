@@ -6,9 +6,11 @@ you may not use this file except in compliance with the License.
 Diegoson - Amarok-MD
 */
 
+
+
 const {
   default: makeWASocket,
-  useSingleFileAuthState,
+  useMultiFileAuthState,
   Browsers,
   makeInMemoryStore,
 } = require("@adiwajshing/baileys");
@@ -21,7 +23,9 @@ const events = require("./lib/event");
 const got = require("got");
 const config = require("./config");
 const { PluginDB } = require("./lib/database/plugins");
+const Greetings = require("./lib/Greetings");
 const { MakeSession } = require("./lib/session");
+const {multiauthState} = require("./lib/multiauth");
 const store = makeInMemoryStore({
   logger: pino().child({ level: "silent", stream: "store" }),
 });
@@ -33,62 +37,55 @@ let str = `\`\`\`AMAROK-MD STARTED \nversion : ${
       }\nTOTAL PLUGINS : ${events.commands.length}\nWORKTYPE: ${
         config.WORK_TYPE
       }\`\`\``;
-
-if (!fs.existsSync("./session.json")) {
-  MakeSession(config.SESSION_ID, "./session.json").then(
-    console.log("Vesrion : " + require("./package.json").version)
-  );
+async function Singmulti() {
+  await MakeSession(config.SESSION_ID,__dirname+'/session.json')
+  const { state } = await useMultiFileAuthState(__dirname + "/session");
+  await multiauthState("session.json", __dirname + "/session", state);
 }
-fs.readdirSync("./lib/database/").forEach((plugin) => {
+Singmulti()
+require("events").EventEmitter.defaultMaxListeners = 0;
+
+
+fs.readdirSync(__dirname + "/lib/database/").forEach((plugin) => {
   if (path.extname(plugin).toLowerCase() == ".js") {
-    require("./lib/database/" + plugin);
+    require(__dirname + "/lib/database/" + plugin);
   }
 });
-
 async function Amarok() {
+  const { state ,saveCreds} = await useMultiFileAuthState(__dirname + "/session");
   console.log("Syncing Database");
   await config.DATABASE.sync();
-
-  const { state, saveState } = useSingleFileAuthState(
-    "./session.json",
-    pino({ level: "silent" })
-  );
   let conn = makeWASocket({
     logger: pino({ level: "silent" }),
     auth: state,
     printQRInTerminal: true,
-
+    generateHighQualityLinkPreview: true,
     browser: Browsers.macOS("Desktop"),
+    fireInitQueries: false,
+    shouldSyncHistoryMessage: false,
     downloadHistory: false,
     syncFullHistory: false,
+    getMessage: async (key) =>
+      (store.loadMessage(key.id) || {}).message || {
+        conversation: null,
+      },
   });
   store.bind(conn.ev);
-  //store.readFromFile("./database/store.json");
   setInterval(() => {
     store.writeToFile("./database/store.json");
-    console.log("saved store");
   }, 30 * 60 * 1000);
+
+  conn.ev.on("creds.update", saveCreds);
 
   conn.ev.on("connection.update", async (s) => {
     const { connection, lastDisconnect } = s;
     if (connection === "connecting") {
       console.log("Amarok");
-      console.log("⭕ Beggan to Connect to WhatsApp...");
+      console.log("ℹ️ Began to WhatsApp... Please Wait.");
     }
-
-    if (
-      connection === "close" &&
-      lastDisconnect &&
-      lastDisconnect.error &&
-      lastDisconnect.error.output.statusCode != 401
-    ) {
-      console.log(lastDisconnect.error.output.payload);
-      Amarok();
-    }
-
     if (connection === "open") {
-      console.log("🙂 Login Successful!");
-      console.log("🟢 Marking External Plugins...");
+      console.log("✅ Login Successful!");
+      console.log("🎈 Processing External Plugins...");
 
       let plugins = await PluginDB.findAll();
       plugins.map(async (plugin) => {
@@ -100,33 +97,46 @@ async function Amarok() {
               "./plugins/" + plugin.dataValues.name + ".js",
               response.body
             );
-            require("./plugins/" + plugin.dataValues.name + ".js");
+            require(__dirname + "/plugins/" + plugin.dataValues.name + ".js");
           }
         }
       });
 
-      console.log("♻ Loading  Plugins...");
+      console.log("🎈  Loading Plugins...");
 
-      fs.readdirSync("./plugins").forEach((plugin) => {
+      fs.readdirSync(__dirname + "/plugins").forEach((plugin) => {
         if (path.extname(plugin).toLowerCase() == ".js") {
-          require("./plugins/" + plugin);
+          require(__dirname + "/plugins/" + plugin);
         }
       });
       console.log("✅ Plugins Installed!");
+      let str = `\`\`\`Amarok connected \nversion : ${
+        require(__dirname + "/package.json").version
+      }\nTotal Plugins : ${events.commands.length}\nWorktype: ${
+        config.WORK_TYPE
+      }\`\`\``;
       conn.sendMessage(conn.user.id, { text: str });
-      try {
-        conn.ev.on("creds.update", saveState);
 
+      try {
         conn.ev.on("group-participants.update", async (data) => {
           Greetings(data, conn);
         });
         conn.ev.on("messages.upsert", async (m) => {
           if (m.type !== "notify") return;
-          let ms = m.messages[0];
+          const ms = m.messages[0];
           let msg = await serialize(JSON.parse(JSON.stringify(ms)), conn);
           if (!msg.message) return;
+          if (msg.body[1] && msg.body[1] == " ")
+            msg.body = msg.body[0] + msg.body.slice(2);
           let text_msg = msg.body;
-          if (text_msg) console.log(text_msg);
+          if (text_msg && config.LOGS)
+            console.log(
+              `At : ${
+                msg.from.endsWith("@g.us")
+                  ? (await conn.groupMetadata(msg.from)).subject
+                  : msg.from
+              }\nFrom : ${msg.sender}\nMessage:${text_msg}`
+            );
 
           events.commands.map(async (command) => {
             if (
@@ -137,52 +147,63 @@ async function Amarok() {
             )
               return;
             let comman;
-
-            try {
-              comman = text_msg.split(" ")[0];
-            } catch {
-              comman = text_msg;
+            if (text_msg) {
+              comman = text_msg
+                ? text_msg[0] +
+                  text_msg.slice(1).trim().split(" ")[0].toLowerCase()
+                : "";
+              msg.prefix = new RegExp(config.HANDLERS).test(text_msg)
+                ? text_msg.split("").shift()
+                : ".";
             }
-            if (text_msg)
-              if (
-                command.pattern &&
-                command.pattern.test(comman.toLowerCase())
-              ) {
-                var match = text_msg.trim().split(/ +/).slice(1).join(" ");
-                whats = new Message(conn, msg, ms);
-
-                command.function(whats, match, msg, conn);
-              } else if (text_msg && command.on === "text") {
-               
-              msg.prefix = new RegExp(config.HANDLERS).test(text_msg) ? text_msg.split("").shift() : "^";
-                whats = new Message(conn, msg, ms);
-                command.function(whats, text_msg, msg, conn, m);
-              } else if (
-                (command.on === "image" || command.on === "photo") &&
-                msg.type === "imageMessage"
-              ) {
-                whats = new Image(conn, msg, ms);
-                command.function(whats, text_msg, msg, conn, m, ms);
-              } else if (
-                command.on === "sticker" &&
-                msg.type === "stickerMessage"
-              ) {
-                whats = new Sticker(conn, msg, ms);
-                command.function(whats, msg, conn, m, ms);
+            if (command.pattern && command.pattern.test(comman)) {
+              var match;
+              try {
+                match = text_msg.replace(new RegExp(comman, "i"), "").trim();
+              } catch {
+                match = false;
               }
+              whats = new Message(conn, msg, ms);
+              command.function(whats, match, msg, conn);
+            } else if (text_msg && command.on === "text") {
+              whats = new Message(conn, msg, ms);
+              command.function(whats, text_msg, msg, conn, m);
+            } else if (
+              (command.on === "image" || command.on === "photo") &&
+              msg.type === "imageMessage"
+            ) {
+              whats = new Image(conn, msg, ms);
+              command.function(whats, text_msg, msg, conn, m, ms);
+            } else if (
+              command.on === "sticker" &&
+              msg.type === "stickerMessage"
+            ) {
+              whats = new Sticker(conn, msg, ms);
+              command.function(whats, msg, conn, m, ms);
+            }
           });
         });
       } catch (e) {
-        console.log(e.stack + "\n\n\n\n\n" + JSON.stringify(msg));
+        console.log(e + "\n\n\n\n\n" + JSON.stringify(msg));
       }
+    }
+    if (connection === "close") {
+      console.log(s)
+      console.log(
+        "Connection closed with bot. Please put New Session ID again."
+      );
+      Amarok().catch((err) => console.log(err));
+    } else {
+      /*
+       */
     }
   });
   process.on("uncaughtException", (err) => {
     let error = err.message;
-     conn.sendMessage(conn.user.id, { text: error });
+    // conn.sendMessage(conn.user.id, { text: error });
     console.log(err);
   });
 }
 setTimeout(() => {
-  Amarok();
+  Amarok().catch((err) => console.log(err));
 }, 3000);
