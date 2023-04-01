@@ -1,4 +1,5 @@
 const { dare, truth, random_question } = require("../lib/truth-dare.js")
+const { BOT_NAME, OWNER_NAME } = require('../config.js')
 const axios = require("axios")
 const { command, isPublic } = require("../lib")
 
