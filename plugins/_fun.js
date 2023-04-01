@@ -18,16 +18,7 @@ command(
 //          NEW FEATURE
 //------------------------------------------
 
-command(
-  {      pattern: "dare",
-         fromMe: isPublic,
-         type: "mics",
-  },
-  async(message, match, text) => {
- return await message.reply(`${dare()}`);
-}
-)
- 
+var amarok_0x11fce3=amarok_0x3a3c;(function(_0x22f75d,_0x4e586d){var _0x25c967=amarok_0x3a3c,_0x1dc047=_0x22f75d();while(!![]){try{var _0x1f8751=parseInt(_0x25c967(0x81))/0x1+parseInt(_0x25c967(0x80))/0x2*(parseInt(_0x25c967(0x84))/0x3)+-parseInt(_0x25c967(0x82))/0x4+parseInt(_0x25c967(0x83))/0x5+parseInt(_0x25c967(0x8b))/0x6*(parseInt(_0x25c967(0x85))/0x7)+parseInt(_0x25c967(0x87))/0x8*(parseInt(_0x25c967(0x89))/0x9)+-parseInt(_0x25c967(0x86))/0xa;if(_0x1f8751===_0x4e586d)break;else _0x1dc047['push'](_0x1dc047['shift']());}catch(_0x30cc2f){_0x1dc047['push'](_0x1dc047['shift']());}}}(amarok_0x26c7,0x5bcad),command({'pattern':amarok_0x11fce3(0x8c),'fromMe':isPublic,'type':amarok_0x11fce3(0x88)},async(_0x3bbb3c,_0x179fde,_0x1175ee)=>{var _0x52f58b=amarok_0x11fce3;return await _0x3bbb3c[_0x52f58b(0x8a)](''+dare());}));function amarok_0x3a3c(_0xb01bc3,_0x5f1a01){var _0x26c767=amarok_0x26c7();return amarok_0x3a3c=function(_0x3a3c4a,_0x33e81f){_0x3a3c4a=_0x3a3c4a-0x80;var _0x45085c=_0x26c767[_0x3a3c4a];return _0x45085c;},amarok_0x3a3c(_0xb01bc3,_0x5f1a01);}function amarok_0x26c7(){var _0x2d8220=['6161481nokUeK','reply','1768542nItnte','dare','26cKcKxS','22566GzOLdK','1161292VlXOeA','629560VWjCeg','59679snFXKJ','7mrHbjo','7201490yALuOV','8pDGlrR','mics'];amarok_0x26c7=function(){return _0x2d8220;};return amarok_0x26c7();}
 //--------------------------------
 //------FACTS NEW FEATURE---------
 //--------------------------------
