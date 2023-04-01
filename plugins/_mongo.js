@@ -83,9 +83,6 @@
 *ðŸ“¥ Total Messages* ${ttms}
 *Powered by ${tlang().title}*
 `;
-const buttons = [
-   {buttonld: 'menu', buttonText: {displayText: 'MENU'}, type: 1},
-   ]
    let buttonMessage = {
                 image: {
                     url: pfp,
@@ -93,7 +90,7 @@ const buttons = [
                 caption: profile,
                 footer: tlang().footer,
                 buttons: buttons,
-                headerType: 1,
+                headerType: 4,
             };
             message.sendMessage(message.jid, buttonMessage, {
                 quoted: message,
