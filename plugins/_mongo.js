@@ -103,7 +103,7 @@
 //----------------
 //     AUTO REACT
 //----------------
- command({ on: "body", fromMe: isPrivate,  }, async(message, match) => {
+ command({ on: "text", fromMe: isPrivate,  }, async(message, match) => {
      if (Config.autoreaction === 'true' && message.text.startsWith(prefix)) {
          const emojis = ['❤', '💕', '😻', '🧡', '💛', '💚', '💙', '💜', '🖤', '❣', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '♥', '💌', '🙂', '🤗', '😌', '😉', '🤗', '😊', '🎊', '🎉', '🎁', '🎈', '👋']
          const emokis = emojis[Math.floor(Math.random() * (emojis.length))]
