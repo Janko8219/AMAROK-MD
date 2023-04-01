@@ -121,6 +121,7 @@ module.exports = {
     GOODBYE_MSG: process.env.GOODBYE_MSG                    ||          "Hi @user It was Nice Seeing you",
 //-------------------------------------------------------------------------------------------------------
 
+    AUTOREACTION: process.env.AUTO_REACTION || "on",
 
 //---------------------------------------------------------------------------------------------------
 //              DATABASE URL
@@ -200,7 +201,7 @@ LANG: process.env.THEME|| "AMAROK",
 //--------------------LEVEL MESSAGE-------
 //------------------------------------------
 
-levelupmessage: process.env.LEVEL_UP_MESSAGE || "false",
+LEVELUPMESSAGE: process.env.LEVEL_UP_MESSAGE || "false",
 
 //---------------------------------------------------------
 
