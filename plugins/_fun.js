@@ -32,17 +32,7 @@ command(
 //------FACTS NEW FEATURE---------
 //--------------------------------
 
-command({
-       pattern: "fact",
-       fromMe: isPublic,
-       type: "mics",
- },
- async(message, match, text) => {
-      const { data } = await axios.get(`https://nekos.life/api/v2/fact`)
-      return message.reply(`*Fact:* ${data.fact}\n\n*Powered by Amarok*`)   
-    }
-)
-
+function amarok_0x313f(_0x5ddbb4,_0x5bcecf){const _0x5b2cb3=amarok_0x5b2c();return amarok_0x313f=function(_0x313f2e,_0x5d2517){_0x313f2e=_0x313f2e-0x14f;let _0x368f11=_0x5b2cb3[_0x313f2e];return _0x368f11;},amarok_0x313f(_0x5ddbb4,_0x5bcecf);}function amarok_0x5b2c(){const _0x3b7062=['1wfTCZj','fact','reply','9iqVgYU','mics','9650568ipIHRO','1891314GLPGuv','get','1691085lbPqUr','1315968YQRVii','296816FCIPtS','https://nekos.life/api/v2/fact','83286QemIzn','1194718UuYQfy'];amarok_0x5b2c=function(){return _0x3b7062;};return amarok_0x5b2c();}const amarok_0x2cfec6=amarok_0x313f;(function(_0x225ad3,_0x43c282){const _0x20de8b=amarok_0x313f,_0x150100=_0x225ad3();while(!![]){try{const _0x234931=parseInt(_0x20de8b(0x14f))/0x1*(parseInt(_0x20de8b(0x15b))/0x2)+-parseInt(_0x20de8b(0x158))/0x3+-parseInt(_0x20de8b(0x159))/0x4+-parseInt(_0x20de8b(0x157))/0x5+-parseInt(_0x20de8b(0x155))/0x6+parseInt(_0x20de8b(0x15c))/0x7+-parseInt(_0x20de8b(0x154))/0x8*(-parseInt(_0x20de8b(0x152))/0x9);if(_0x234931===_0x43c282)break;else _0x150100['push'](_0x150100['shift']());}catch(_0x2a52af){_0x150100['push'](_0x150100['shift']());}}}(amarok_0x5b2c,0x3d9b6),command({'pattern':'fact','fromMe':isPublic,'type':amarok_0x2cfec6(0x153)},async(_0x5e241e,_0x50697d,_0x21b054)=>{const _0x254f8e=amarok_0x2cfec6,{data:_0x345c5f}=await axios[_0x254f8e(0x156)](_0x254f8e(0x15a));return _0x5e241e[_0x254f8e(0x151)]('*Fact:*\x20'+_0x345c5f[_0x254f8e(0x150)]+'\x0a\x0a*Powered\x20by\x20Amarok*');}));
 //------------------
 //    IM BORED 
 //-----------------
