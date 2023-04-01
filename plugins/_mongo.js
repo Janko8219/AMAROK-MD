@@ -1,6 +1,5 @@
    const { command, amk1, isPublic, getBuffer, RandomXp, Config, tlang, botpic } = require("../lib")
    const Levels = require("discord-xp")
-   const { StickerType } = require("wa-sticker-formatter");
    const fs = require("fs")   
 
    command({
