@@ -13,4 +13,4 @@ const fetch = require("node-fetch");
   
   let media = await (await fetch(response.result.video))
      await message.client.sendMessage(message.jid , { video : media } , { quoted : message , caption : `${response.title })
-});
+}});
