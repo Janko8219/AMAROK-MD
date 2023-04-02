@@ -1,4 +1,4 @@
-  const {
+/*  const {
      command,
      isPublic,
      isPrivate,
@@ -345,4 +345,4 @@ message.client.sendMessage(message.jid, buttonMessage,
  })
 });
 
-
+*/
