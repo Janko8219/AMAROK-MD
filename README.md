@@ -1,6 +1,6 @@
 <h1 align="center">ᴀᴍᴀʀᴏᴋ ᴍᴅ ʙᴏᴛ<br></h1>
 <p align="center">
-<img src="https://i.ibb.co/TTytLYJ/c1d13a0be07f.jpg"/>
+<img src="https://telegra.ph/file/6086f101a36f7fc14bff6.png"/>
 
 
 ## DEPLOYMENT BELOW

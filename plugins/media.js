@@ -59,7 +59,7 @@ Function(
     let [query, amount] = match.split(",");
     let result = await gimage(query, amount);
     await message.sendMessage(
-      `📸𝘈𝘔𝘈𝘙𝘖𝘒 𝘐𝘚 𝘋𝘖𝘞𝘕𝘓𝘖𝘈𝘋𝘐𝘕𝘎 𝘠𝘖𝘜𝘙 𝘐𝘔𝘈𝘎𝘌𝘚📸 ${amount || 5} 𝘐𝘔𝘈𝘎𝘌𝘚 𝘍𝘖𝘙 ${query}_`
+      `downloading  ${amount || 5} images of ${query}_`
     );
     for (let i of result) {
       await message.sendFromUrl(i);
@@ -254,7 +254,7 @@ command(
 
     if (!ytIdRegex.test(match)) return await message.reply("_Invalid Url_");
     ytv(match).then(async ({ dl_link, title }) => {
-      await message.reply(`🔍𝘈𝘔𝘈𝘙𝘖𝘒 𝘐𝘚 𝘕𝘖𝘞 𝘋𝘖𝘞𝘕𝘓𝘖𝘈𝘋𝘐𝘕𝘎🔍 ${title}_`);
+      await message.reply(`in_process wait ${title}_`);
       return await message.sendFromUrl(dl_link, {
         filename: title,
         quoted: message,
@@ -263,26 +263,3 @@ command(
   }
 );
 
-command(
-  {
-    pattern: "yta ?(.*)",
-    fromMe: isPrivate,
-    dontAddCommandList: true,
-  },
-  async (message, match) => {
-    match = match || message.reply_message.text;
-    if (!match) return await message.reply("_Enter a URL_");
-    if (!ytIdRegex.test(match)) return await message.reply("_Invalid Url_");
-    yta(match).then(async ({ dl_link, title, thumb }) => {
-      await message.reply(`🔍𝘈𝘔𝘈𝘙𝘖𝘒 𝘐𝘚 𝘕𝘖𝘞 𝘋𝘖𝘞𝘕𝘓𝘖𝘈𝘋𝘐𝘕𝘎🔍 ${title}_`);
-      let buff = await AddMp3Meta(dl_link, thumb, {
-        title,
-      });
-      return await message.sendMessage(
-        buff,
-        { mimetype: "audio/mpeg", quoted: message.data },
-        "audio"
-      );
-    });
-  }
-);
