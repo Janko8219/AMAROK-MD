@@ -10,7 +10,7 @@
 
  const { hostname, uptime } = require("os");
   command(
-     {     pattern: "menu",
+     {     pattern: "men",
            fromMe: isPrivate,
            type: "user",
     },
