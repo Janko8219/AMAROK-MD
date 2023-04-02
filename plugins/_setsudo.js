@@ -4,7 +4,7 @@
 //------------------------------------------------------------------------------------
 const { command, isPrivate } = require("../lib")
 const { SUDO } = require("../config")
-command{ pattern: "setsudo ?(.*)", fromMe: true, desc: "set sudo", type: "user" },
+command({ pattern: "setsudo ?(.*)", fromMe: true, desc: "set sudo", type: "user" },
   async (m, mm) => {
     var newSudo = (m.reply_message ? m.reply_message.jid : "" || mm).split(
       "@"
